@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свет Куинджи — Интерактивная Галерея</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0b0f19;
+            color: #f0f4f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 60px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 26px;
+            margin-top: 30px;
+            color: #e2e8f0;
+            letter-spacing: 1px;
+        }
+        p.subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
+        
+        /* Стили для аудио-блоков */
+        .track-card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border-left: 4px solid #3b82f6;
+        }
+        .track-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            color: #f8fafc;
+        }
+        .track-info p {
+            margin: 0;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+        .play-btn {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+        .play-btn:hover { background-color: #2563eb; }
+        .play-btn.playing { background-color: #10b981; }
+
+        /* Стили для ползунка */
+        .slider-section {
+            background: #1e293b;
+            padding: 25px 20px;
+            border-radius: 12px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        .slider-section h3 { margin-top: 0; color: #e2e8f0; text-align: center; }
+        .comparison-slider {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .image-background, .image-foreground {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+        }
+        .image-foreground { width: 50%; border-right: 2px solid #fff; }
+        .slider-input {
+            position: absolute;
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            outline: none;
+            margin: 0;
+            top: 0; left: 0; cursor: ew-resize; z-index: 10;
+        }
+
+        /* Стили для ресторана */
+        .restaurant-block {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .restaurant-block h2 { color: #f59e0b; font-size: 20px; margin-top: 0; }
+        .promo-code {
+            display: inline-block;
+            background: #34d399;
+            color: #064e3b;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Свет Куинджи</h1>
+        <p class="subtitle">Официальный аудиогид по выставке</p>
+
+        <!-- БЛОК АУДИОДОРЖЕК -->
+        <div class="track-list">
+            
+            <div class="track-card">
+                <div class="track-info">
+                    <h3>1. Вступление</h3>
+                    <p>Феномен мастера и его происхождение</p>
+                </div>
+                <button class="play-btn" data-target="audio1">▶</button>
+                <audio id="audio1" src="audio/intro.mp3"></audio>
+            </div>
+
+            <div class="track-card">
+                <div class="track-info">
+                    <h3>2. Березовая роща</h3>
+                    <p>Как художник заставил солнце светить</p>
+                </div>
+                <button class="play-btn" data-target="audio2">▶</button>
+                <audio id="audio2" src="audio/birch.mp3"></audio>
+            </div>
+
+            <div class="track-card">
+                <div class="track-info">
+                    <h3>3. Лунная ночь на Днепре</h3>
+                    <p>Эксперименты с красками и мистика</p>
+                </div>
+                <button class="play-btn" data-target="audio3">▶</button>
+                <audio id="audio3" src="audio/moon.mp3"></audio>
+            </div>
+
+            <div class="track-card">
+                <div class="track-info">
+                    <h3>4. Греческие корни</h3>
+                    <p>Темперамент и приглашение к столу</p>
+                </div>
+                <button class="play-btn" data-target="audio4">▶</button>
+                <audio id="audio4" src="audio/greece.mp3"></audio>
+            </div>
+
+        </div>
+
+        <!-- ИНТЕРАКТИВНЫЙ БЛОК -->
+        <div class="slider-section">
+            <h3>Интерактив: Выключаем свет</h3>
+            <p style="font-size:13px; color:#94a3b8; text-align:center; margin:0;">В 1880 году Куинджи выставлял эту картину в темном зале. Двигайте ползунок, чтобы повторить этот эффект.</p>
+            <div class="comparison-slider">
+                <!-- Картинка для "в темноте" -->
+                <div class="image-background" style="background-image: url('img/moon_dark.jpg');"></div>
+                <!-- Картинка для "обычный свет" -->
+                <div class="image-foreground" id="foregroundImg" style="background-image: url('img/moon_light.jpg');"></div>
+                <!-- Ползунок -->
+                <input type="range" min="0" max="100" value="50" class="slider-input" id="slider">
+            </div>
+        </div>
+
+        <!-- БЛОК РЕСТОРАНА -->
+        <div class="restaurant-block">
+            <h2>Продолжение вечера</h2>
+            <p style="font-size:14px; line-height:1.6; color:#cbd5e1; margin:0;">
+                Архип Куинджи — приазовский грек. Приглашаем вас продолжить знакомство с греческой культурой в ресторане по соседству с галереей.
+            </p>
+            <div class="promo-code">СВЕТ КУИНДЖИ</div>
+            <p style="font-size:12px; color:#94a3b8; margin-top:10px; margin-bottom:0;">Покажите этот экран официанту для получения комплимента от заведения</p>
+        </div>
+
+    </div>
+
+    <!-- СКРИПТ ДЛЯ УМНОГО ПЛЕЕРА И ПОЛЗУНКА -->
+    <script>
+        // Логика плеера
+        const buttons = document.querySelectorAll('.play-btn');
+        const audios = document.querySelectorAll('audio');
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                const targetAudio = document.getElementById(targetId);
+
+                // Если трек уже играет - ставим на паузу
+                if (!targetAudio.paused) {
+                    targetAudio.pause();
+                    btn.innerText = '▶';
+                    btn.classList.remove('playing');
+                } else {
+                    // Останавливаем все остальные треки
+                    audios.forEach(a => a.pause());
+                    buttons.forEach(b => {
+                        b.innerText = '▶';
+                        b.classList.remove('playing');
+                    });
+                    
+                    // Включаем выбранный
+                    targetAudio.play();
+                    btn.innerText = '⏸';
+                    btn.classList.add('playing');
+                }
+            });
+        });
+
+        // Сброс иконки, когда трек закончился
+        audios.forEach(audio => {
+            audio.addEventListener('ended', (e) => {
+                const id = e.target.id;
+                const btn = document.querySelector(`[data-target="${id}"]`);
+                btn.innerText = '▶';
+                btn.classList.remove('playing');
+            });
+        });
+
+        // Логика ползунка До/После
+        const slider = document.getElementById('slider');
+        const foregroundImg = document.getElementById('foregroundImg');
+
+        slider.addEventListener('input', (e) => {
+            const value = e.target.value;
+            foregroundImg.style.width = `${value}%`;
+        });
+    </script>
+</body>
+</html>
